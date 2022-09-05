@@ -4,7 +4,8 @@
   "author": "helox.ye",
   "main": "./src/source/index.js",
   "typings": "./types/index.d.ts",
-  "private": true,
+  "private": false,
+  "description": "a svg icon component",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
