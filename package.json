@@ -8,7 +8,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "release": "standard-version -a",
+    "major": "standard-version --release-as major",
+    "minor": "standard-version --release-as minor",
+    "patch": "standard-version --release-as patch",
+    "alpha": "standard-version --prerelease alpha",
+    "beta": "standard-version --prerelease beta"
   },
   "dependencies": {
     "ejs": "^3.1.8"
@@ -22,6 +28,7 @@
     "core-js": "^3.8.3",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "standard-version": "^9.5.0",
     "svg-sprite-loader": "^6.0.11",
     "svgo-loader": "^3.0.1",
     "vue": "^2.6.14",
