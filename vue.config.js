@@ -1,4 +1,12 @@
-const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
-  transpileDependencies: true
-})
+const SvgIconConfig = require('./webpack/index')
+
+module.exports = {
+  pages: {
+    index: {
+      entry: 'example/main.js'
+    }
+  },
+  chainWebpack: (config) => {
+    SvgIconConfig({ config, iconPath: './example/assets/icons', name: 'svg-icon-1' })
+  }
+}

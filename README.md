@@ -1,4 +1,4 @@
-# cut-svg-icon-webpack-plugin
+# svg-icon-webpack-plugin
 
 ## Project setup
 ```

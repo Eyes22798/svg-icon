@@ -1,6 +1,9 @@
 {
-  "name": "cut-svg-icon-webpack-plugin",
+  "name": "@eyes22798/svg-icon",
   "version": "0.1.0",
+  "author": "helox.ye",
+  "main": "./src/source/index.js",
+  "typings": "./types/index.d.ts",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -8,8 +11,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.8.3",
-    "vue": "^2.6.14"
+    "ejs": "^3.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -17,8 +19,12 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "core-js": "^3.8.3",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "svg-sprite-loader": "^6.0.11",
+    "svgo-loader": "^3.0.1",
+    "vue": "^2.6.14",
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
