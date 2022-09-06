@@ -7,7 +7,7 @@ const componentName = '<%= name %>'
 requireAll(req)
 
 SvgIcon.install = function (Vue) {
-  Vue.component(componentName ?? SvgIcon.name, SvgIcon)
+  Vue.component(componentName || SvgIcon.name, SvgIcon)
 }
 
 export default SvgIcon
