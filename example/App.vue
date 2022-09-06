@@ -1,18 +1,37 @@
 <template>
   <div id="app">
-    <svg-icon-1 name="task" />
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <h2>SVG ICON LIST ViEW</h2><svg-icon-1 name="success" className="icon-task" />
+
+      <IconList :icons="icons" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from '../example/components/HelloWorld.vue'
+import IconList from '../example/components/icon-list.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    IconList,
+  },
+  data() {
+    return {
+      icons: [
+        { name: 'bianjirenwu' },
+        { name: 'close-circle' },
+        { name: 'question' },
+        { name: 'success' },
+        { name: 'warning-circle' },
+        { name: 'task' },
+        { name: 'a-shujukeshihua' },
+        { name: 'huaban' },
+        { name: 'shouye' },
+        { name: 'shoucang' },
+        { name: 'shanchu' },
+      ]
+    }
   }
 }
 </script>
@@ -24,6 +43,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 20px;
+  background-color: #f4f4f6;
+  height: calc(100vh - 40px - 20px);
+}
+
+.icon-task {
+  color: skyblue;
 }
 </style>
