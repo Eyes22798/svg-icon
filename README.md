@@ -17,7 +17,7 @@ yarn add @eyes22798/svg-icon
 
  - [Vue.js](https://github.com/vuejs/vue) (2.x+)
  - [svgxuse](https://github.com/Keyamoon/svgxuse) polyfill to support IE9-11 version
- - SVG sprite file that should be available in **"/assets/icons"** folder by default (can be changed, more details in configuration section)
+ - SVG sprite file that should be available in **"/assets/icons"** folder (can be changed, changed in vue.config.js)
 
 
 ## Usage
