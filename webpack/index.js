@@ -6,11 +6,12 @@ const fs = require('fs')
 function SvgIconConfig ({ config, iconPath, name }) {
   const directory = path.resolve(process.cwd(), iconPath) // icon资源所在的绝对地址
   const sourcePath = path.resolve(__dirname, '../src/source/index.js')
+  const iconPathArr = path.resolve(process.cwd(), iconPath).split(path.sep)
 
   // 修改源文件替换变量
   const rawSouce = fs.readFileSync(sourcePath, 'utf-8')
   const source = ejs.render(rawSouce, {
-    iconPath: path.resolve(process.cwd(), iconPath),
+    iconPath: iconPathArr.join('/'),
     name
   })
 
