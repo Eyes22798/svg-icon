@@ -18,7 +18,7 @@ function SvgIconConfig ({ config, iconPath, name }) {
 
   // svg loader 相关配置
   config.module.rule('svg').exclude.add(directory)
-  config.module.rules.delete("svg")
+  config.module.rules.delete('svg')
   config.module
     .rule ('svg-sprite-loader')
     .test(/\.svg$/)
@@ -26,15 +26,15 @@ function SvgIconConfig ({ config, iconPath, name }) {
     .end()
     .use('svg-sprite-loader')
     .loader('svg-sprite-loader')
-    .options({ symbolId: "icon-[name]" })
+    .options({ symbolId: 'icon-[name]' })
     .end()
     .before('svg-sprite-loader')
-    .use("svgo-loader")
+    .use('svgo-loader')
     .loader('svgo-loader')
     .options({
       plugins: [{
-        name: "removeAttrs",
-        params: { attrs: 'fil1' }
+        name: 'removeAttrs',
+        params: { attrs: 'fill' }
       }]
     })
     .end()
