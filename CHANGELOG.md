@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/Eyes22798/custom-svg-icon/compare/v0.0.6...v0.0.7) (2022-09-06)
+
+
+### Bug Fixes
+
+* vue-cli4 loader bug ([bd4c93c](https://github.com/Eyes22798/custom-svg-icon/commit/bd4c93cf14b5a750eaabcd8f6566218991a10e97))
+
 ### [0.0.6](https://github.com/Eyes22798/custom-svg-icon/compare/v0.0.5...v0.0.6) (2022-09-06)
 
 
