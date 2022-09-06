@@ -34,7 +34,7 @@ function SvgIconConfig ({ config, iconPath, name }) {
     .options({
       plugins: [{
         name: 'removeAttrs',
-        params: { attrs: 'fill' }
+        params: { attrs: ['fill', 'fill-rule'] }
       }]
     })
     .end()
