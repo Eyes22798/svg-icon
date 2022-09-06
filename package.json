@@ -1,6 +1,6 @@
 {
   "name": "@eyes22798/svg-icon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "helox.ye",
   "main": "./src/source/index.js",
   "typings": "./types/index.d.ts",
