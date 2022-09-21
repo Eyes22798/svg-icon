@@ -4,13 +4,17 @@
   "author": "helox.ye",
   "main": "./src/source/index.js",
   "typings": "./types/index.d.ts",
+  "license": "MIT",
   "keywords": [
     "svg-icon",
     "svg",
-    "svg-sprite"
+    "svg-sprite",
+    "vue"
   ],
+  "homepage": "https://github.com/Eyes22798/custom-svg-icon",
+  "repository": "https://github.com/Eyes22798/custom-svg-icon.git",
   "private": false,
-  "description": "a svg icon component",
+  "description": "a svg icon component use in vue",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
