@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/Eyes22798/custom-svg-icon/compare/v0.0.7...v0.0.8) (2022-09-21)
+
+
+### Bug Fixes
+
+* reopen server path require error ([3ea5364](https://github.com/Eyes22798/custom-svg-icon/commit/3ea5364e1f1cc72b609d07b24fad12974d5289e9))
+
 ### [0.0.7](https://github.com/Eyes22798/custom-svg-icon/compare/v0.0.6...v0.0.7) (2022-09-06)
 
 
