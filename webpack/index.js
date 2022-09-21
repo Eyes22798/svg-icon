@@ -3,9 +3,6 @@ const ejs = require('ejs')
 const fsExtra = require('fs-extra')
 const fs = require('fs')
 class ResetSourceWebpackPlugin {
-  constructor(options) {
-  }
-
   apply(compiler) {
     const sourcePath = path.resolve(__dirname, '../src/source/index.js')
     const templatePath = path.resolve(__dirname, '../src/template/index.js')
@@ -13,7 +10,7 @@ class ResetSourceWebpackPlugin {
 
     compiler.hooks.watchClose.tap('ResetSourceWebpackPlugin',
       // compliation 结束后还原源文件
-      compilation => {
+      () => {
         fsExtra.outputFileSync(sourcePath, rawSouce, 'utf8')
       })
   }
