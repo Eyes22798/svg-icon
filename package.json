@@ -4,6 +4,11 @@
   "author": "helox.ye",
   "main": "./src/source/index.js",
   "typings": "./types/index.d.ts",
+  "keywords": [
+    "svg-icon",
+    "svg",
+    "svg-sprite"
+  ],
   "private": false,
   "description": "a svg icon component",
   "scripts": {
