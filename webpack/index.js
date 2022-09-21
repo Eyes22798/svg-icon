@@ -2,6 +2,23 @@ const path = require('path')
 const ejs = require('ejs')
 const fsExtra = require('fs-extra')
 const fs = require('fs')
+class ResetSourceWebpackPlugin {
+  constructor(options) {
+  }
+
+  apply(compiler) {
+    const sourcePath = path.resolve(__dirname, '../src/source/index.js')
+    const templatePath = path.resolve(__dirname, '../src/template/index.js')
+    const rawSouce = fs.readFileSync(templatePath, 'utf-8')
+
+    compiler.hooks.watchClose.tap('ResetSourceWebpackPlugin',
+      // compliation 结束后还原源文件
+      compilation => {
+        fsExtra.outputFileSync(sourcePath, rawSouce, 'utf8')
+      })
+  }
+}
+const RestPlugin = ResetSourceWebpackPlugin
 
 function SvgIconConfig ({ config, iconPath, name }) {
   const directory = path.resolve(process.cwd(), iconPath) // icon资源所在的绝对地址
@@ -16,6 +33,7 @@ function SvgIconConfig ({ config, iconPath, name }) {
   })
 
   fsExtra.outputFileSync(sourcePath, source, 'utf8')
+  config.plugin('restPlugin').use(RestPlugin)
 
   // svg loader 相关配置
   config.module.rule('svg').exclude.add(directory)
