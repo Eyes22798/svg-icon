@@ -25,7 +25,7 @@ In your main.js file:
 ```js
 import SvgIcon from '@eyes22798/svg-icon'
 
-Vue.use(VueSVGCustomIcon)
+Vue.use(SvgIcon)
 ```
 
 In your vue.config.js
