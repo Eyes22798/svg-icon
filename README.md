@@ -1,4 +1,4 @@
-# Vue-svg-icon-custom
+# vue-svg-icon-custom
 A lightweight component with no dependecy to allow use of custom SVG icons in your Vue.js application based on SVG sprite.
 
 ## Installation
