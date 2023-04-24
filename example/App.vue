@@ -30,6 +30,14 @@ export default {
         { name: 'shouye' },
         { name: 'shoucang' },
         { name: 'shanchu' },
+        { name: 'shijianchuo' },
+        { name: 'shijianzhouqi' },
+        { name: 'shuzihua' },
+        { name: 'sousuobianxiao' },
+        { name: 'sousuofangda' },
+        { name: 'wodetuandui' },
+        { name: 'wodexiangmu' },
+        // { name: 'business-fill' },
       ]
     }
   }
