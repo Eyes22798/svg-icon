@@ -2,6 +2,25 @@ const path = require('path')
 const ejs = require('ejs')
 const fsExtra = require('fs-extra')
 const fs = require('fs')
+const resolve = (context) => {
+  return path.join(process.cwd(), context)
+}
+const findFileFolder = (dir, filename) => {
+  const files = fs.readdirSync(resolve(dir));
+  const result = [];
+  files.map(file => {
+    const filePath = `${dir}/${file}`;
+    if (fs.statSync(filePath).isDirectory()) {
+      if (file === filename) {
+        result.push(filePath);
+      } else {
+        result.push(...findFileFolder(filePath, filename));
+      }
+    }
+  });
+  return result;
+}
+
 class ResetSourceWebpackPlugin {
   apply(compiler) {
     const sourcePath = path.resolve(__dirname, '../src/source/index.js')
@@ -35,24 +54,31 @@ function SvgIconConfig ({ config, iconPath, name }) {
   // svg loader 相关配置
   config.module.rule('svg').exclude.add(directory)
   config.module.rules.delete('svg')
-  config.module
-    .rule ('svg-sprite-loader')
-    .test(/\.svg$/)
+  const svgRule = config.module.rule("svg-sprite")
+  svgRule.uses.clear()
+  svgRule
+    .test(/\.(svg)(\?.*)?$/)
     .include.add(directory)
     .end()
-    .use('svg-sprite-loader')
-    .loader('svg-sprite-loader')
-    .options({ symbolId: 'icon-[name]' })
-    .end()
-    .before('svg-sprite-loader')
-    .use('svgo-loader')
-    .loader('svgo-loader')
+    .use("svg-sprite-loader")
+    .loader("svg-sprite-loader")
     .options({
-      plugins: [{
-        name: 'removeAttrs',
-        params: { attrs: ['fill', 'fill-rule'] }
-      }]
+      symbolId: "icon-[name]"
     })
+    .end()
+  
+  const svgoExcludePaths = findFileFolder(iconPath, 'original')
+  const svgoRule = config.module.rule("svgo")
+  svgoRule
+    .test(/\.(svg)(\?.*)?$/)
+    .exclude.add([...svgoExcludePaths.map(path => resolve(path))])
+    .end()
+    .use("svgo-loader")
+    .loader("svgo-loader")
+    .tap(options => ({
+      ...options,
+      plugins: [{ name: "removeAttrs", params: { attrs: "fill" } }]
+    }))
     .end()
 
   config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'),[{ plainSprite: true }])//配置1oader外还有插件需要配
