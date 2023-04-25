@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/Eyes22798/custom-svg-icon/compare/v0.1.1...v0.1.2) (2023-04-25)
+
+
+### Bug Fixes
+
+* svg loader config error ([e26f709](https://github.com/Eyes22798/custom-svg-icon/commit/e26f7095dd8c9a8e7b78677dce87d63e32717329))
+
 ### [0.1.1](https://github.com/Eyes22798/custom-svg-icon/compare/v0.1.0...v0.1.1) (2023-04-24)
 
 ## [0.1.0](https://github.com/Eyes22798/custom-svg-icon/compare/v0.0.12...v0.1.0) (2023-04-24)
