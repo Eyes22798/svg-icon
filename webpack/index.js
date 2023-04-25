@@ -53,7 +53,6 @@ function SvgIconConfig ({ config, iconPath, name }) {
 
   // svg loader 相关配置
   config.module.rule('svg').exclude.add(directory)
-  config.module.rules.delete('svg')
   const svgRule = config.module.rule("svg-sprite")
   svgRule.uses.clear()
   svgRule
