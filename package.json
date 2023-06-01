@@ -28,8 +28,11 @@
   },
   "dependencies": {
     "ejs": "^3.1.8",
+    "fs-extra": "^11.1.1",
+    "glob": "^10.2.6",
     "svg-sprite-loader": "^6.0.11",
-    "svgo-loader": "^3.0.1"
+    "svgo-loader": "^3.0.1",
+    "webpack-virtual-modules": "^0.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -42,8 +45,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "standard-version": "^9.5.0",
     "vue": "^2.6.14",
-    "vue-template-compiler": "^2.6.14",
-    "webpack-virtual-modules": "^0.5.0"
+    "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
     "root": true,
