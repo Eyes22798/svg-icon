@@ -2,8 +2,9 @@ const path = require('path')
 const ejs = require('ejs')
 const fsExtra = require('fs-extra')
 const fs = require('fs')
-const glob = require('glob')
+const { globSync } = require('glob')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
+
 const resolve = (context) => {
   return path.join(process.cwd(), context)
 }
@@ -22,8 +23,8 @@ const findFileFolder = (dir, filename) => {
   });
   return result;
 }
-const readFile = ({ dir = '', prefix = ''}) => {
-  const files = glob.sync(dir, {
+const readFile = function ({ dir = '', prefix = ''}) {
+  const files = globSync(dir, {
     absolute: true,
     cwd: path.resolve(__dirname, '..')
   })
@@ -34,63 +35,44 @@ const readFile = ({ dir = '', prefix = ''}) => {
     const parseResult = path.parse(file)
     const fileName = parseResult.name + parseResult.ext
     
-    result[prefix ? `{prefix}/${fileName}` : prefix] = data
+    result[prefix ? `${prefix}/${fileName}` : prefix] = data
   })
+
+  return result
 }
 
 const virtualModulesPrefix = 'node_modules/@eyes22798/svg-icon'
 
-class ResetSourceWebpackPlugin {
-  apply(compiler) {
-    const sourcePath = path.resolve(__dirname, '../src/source/index.js')
-    const templatePath = path.resolve(__dirname, '../src/template/index.js')
-    const rawSouce = fs.readFileSync(templatePath, 'utf-8')
-
-    compiler.hooks.watchClose.tap('ResetSourceWebpackPlugin',
-      // compliation 结束后还原源文件
-      () => {
-        fsExtra.outputFileSync(sourcePath, rawSouce, 'utf8')
-      })
-  }
-}
-const RestPlugin = ResetSourceWebpackPlugin
-
 class virtualModulesWebPackPlugin {
   constructor(options = {}) {
-    console.log(options)
     this.virtualModulesPlugin = null
     this.virtualModulesPrefix = virtualModulesPrefix
     this.options = options
   }
   apply(compiler) {
-    compiler.hooks.entryOption.tap('virtualModulesPlugin',
-      (context, entry) => {
-        console.log('entryOption==============', context, entry)
-        const sourcePath = path.resolve(__dirname, '../src/source/index.js')
-        const iconPathArr = path.resolve(process.cwd(), this.options.iconPath).split(path.sep)
-
-        // 修改源文件替换变量
-        const rawSouce = fs.readFileSync(sourcePath, 'utf-8')
-        const source = ejs.render(rawSouce, {
-          iconPath: iconPathArr.join('/'),
-          name: this.options.name
-        })
-
-        fsExtra.outputFileSync(sourcePath, source, 'utf8')
-      })
+    this._addVirtualModules(compiler) // 生成虚拟模块
   }
 
   _addVirtualModules(compiler) {
     const data = readFile({
       prefix: this.virtualModulesPrefix,
-      dir: '../src/source/*.*',
+      dir: './src/**/*.vue',
     })
+
+    const sourcePath = path.resolve(__dirname, '../src/index.js')
+    const iconPathArr = path.resolve(process.cwd(), this.options.iconPath).split(path.sep)
+    // 修改源文件替换变量
+    const rawSource = fs.readFileSync(sourcePath, 'utf-8')
+    const source = ejs.render(rawSource, {
+      iconPath: iconPathArr.join('/'),
+      name: this.options.name
+    })
+    data[`${this.virtualModulesPrefix}/index.js`] = source
 
     this.virtualModulesPlugin = new VirtualModulesPlugin(data)
     this.virtualModulesPlugin.apply(compiler)
   }
 }
-
 const vmPlugin = virtualModulesWebPackPlugin
 
 function SvgIconConfig ({ config, iconPath, name }) {
@@ -125,13 +107,11 @@ function SvgIconConfig ({ config, iconPath, name }) {
     }))
     .end()
 
-  config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'),[{ plainSprite: true }])//配置1oader外还有插件需要配
+  config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'),[{ plainSprite: true }])//配置loader外还有插件需要配
 
   config.plugin('vmPlugin').use(vmPlugin, [
     { iconPath, name }
   ])
-
-  config.plugin('restPlugin').use(RestPlugin)
 }
 
 module.exports = SvgIconConfig

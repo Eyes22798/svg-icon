@@ -1,4 +1,4 @@
-import SvgIcon from '../icon.vue'
+import SvgIcon from './icon.vue'
 const requireAll = requireContext => requireContext.keys().map(requireContext)
 
 // <%= iconPath %>
