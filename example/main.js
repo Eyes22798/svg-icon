@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import SvgIcon from '../src/source/index.js'
+import SvgIcon from '@eyes22798/svg-icon'
 
 Vue.config.productionTip = false
 Vue.use(SvgIcon)
