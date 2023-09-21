@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.0...v1.0.1) (2023-09-21)
+
 ### [0.0.21](https://github.com/Eyes22798/vue-component-template/compare/v0.0.20...v0.0.21) (2022-11-30)
 
 ### [0.0.20](https://github.com/Eyes22798/vue-component-template/compare/v0.0.19...v0.0.20) (2022-11-30)
