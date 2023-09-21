@@ -118,7 +118,6 @@
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "npm run test:unit",
       "postbump": "npm run build"
     }
   }
