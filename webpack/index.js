@@ -5,6 +5,16 @@ const fs = require('fs')
 const { globSync } = require('glob')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
 
+function isPackageInstalled(packageName) {
+  try {
+    const packagePath = require.resolve(packageName)
+
+    return fs.existsSync(packagePath)
+  } catch (error) {
+    return false
+  }
+}
+
 const resolve = (context) => {
   return path.join(process.cwd(), context)
 }
@@ -34,7 +44,7 @@ const readFile = function ({ dir = '', prefix = ''}) {
     const data = fsExtra.readFileSync(file, 'utf8')
     const parseResult = path.parse(file)
     const fileName = parseResult.name + parseResult.ext
-    
+
     result[prefix ? `${prefix}/${fileName}` : prefix] = data
   })
 
@@ -59,7 +69,10 @@ class virtualModulesWebPackPlugin {
       dir: './src/**/*.vue',
     })
 
-    const sourcePath = path.resolve(__dirname, '../src/index.js')
+    const sourcePath = isPackageInstalled('@eyes22798/svg-icon/webpack')
+      ? path.resolve(__dirname, '../dist/index.esm.js')
+      : path.resolve(__dirname, '../src/template.js')
+
     const iconPathArr = path.resolve(process.cwd(), this.options.iconPath).split(path.sep)
     // 修改源文件替换变量
     const rawSource = fs.readFileSync(sourcePath, 'utf-8')
@@ -71,6 +84,9 @@ class virtualModulesWebPackPlugin {
 
     this.virtualModulesPlugin = new VirtualModulesPlugin(data)
     this.virtualModulesPlugin.apply(compiler)
+    if (process.env.NODE_ENV === 'production' && isPackageInstalled('@eyes22798/svg-icon/webpack')) {
+      fsExtra.outputFileSync(sourcePath, source, 'utf8')
+    }
   }
 }
 const vmPlugin = virtualModulesWebPackPlugin
@@ -92,7 +108,7 @@ function SvgIconConfig ({ config, iconPath, name }) {
       symbolId: "icon-[name]"
     })
     .end()
-  
+
   const svgoExcludePaths = findFileFolder(iconPath, 'original')
   const svgoRule = config.module.rule("svgo")
   svgoRule

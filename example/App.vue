@@ -8,55 +8,44 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
 import IconList from '../example/components/icon-list.vue'
 
-export default {
-  name: 'App',
+export default defineComponent({
   components: {
     IconList,
   },
-  data() {
+  setup() {
+    const icons =  [
+      { name: 'bianjirenwu' },
+      { name: 'close-circle' },
+      { name: 'question' },
+      { name: 'success' },
+      { name: 'warning-circle' },
+      { name: 'task' },
+      { name: 'a-shujukeshihua' },
+      { name: 'huaban' },
+      { name: 'shouye' },
+      { name: 'shoucang' },
+      { name: 'shanchu' },
+      { name: 'shijianchuo' },
+      { name: 'shijianzhouqi' },
+      { name: 'shuzihua' },
+      { name: 'sousuobianxiao' },
+      { name: 'sousuofangda' },
+      { name: 'wodetuandui' },
+      { name: 'wodexiangmu' },
+      // { name: 'business-fill' },
+    ]
+
     return {
-      icons: [
-        { name: 'bianjirenwu' },
-        { name: 'close-circle' },
-        { name: 'question' },
-        { name: 'success' },
-        { name: 'warning-circle' },
-        { name: 'task' },
-        { name: 'a-shujukeshihua' },
-        { name: 'huaban' },
-        { name: 'shouye' },
-        { name: 'shoucang' },
-        { name: 'shanchu' },
-        { name: 'shijianchuo' },
-        { name: 'shijianzhouqi' },
-        { name: 'shuzihua' },
-        { name: 'sousuobianxiao' },
-        { name: 'sousuofangda' },
-        { name: 'wodetuandui' },
-        { name: 'wodexiangmu' },
-        // { name: 'business-fill' },
-      ]
+      icons
     }
   }
-}
+})
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  padding: 20px;
-  background-color: #f4f4f6;
-  height: calc(100vh - 40px - 20px);
-}
+<style lang="scss">
 
-.icon-task {
-  color: skyblue;
-}
 </style>

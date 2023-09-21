@@ -2,9 +2,9 @@
   "name": "@eyes22798/svg-icon",
   "version": "1.0.0",
   "author": "helox.ye",
-  "main": "./src/index.js",
-  "typings": "./types/index.d.ts",
-  "license": "MIT",
+  "main": "index.js",
+  "module": "index.js",
+  "typings": "dist/types/index.d.ts",
   "keywords": [
     "svg-icon",
     "svg",
@@ -15,55 +15,111 @@
   "repository": "https://github.com/Eyes22798/custom-svg-icon.git",
   "private": false,
   "description": "a svg icon component use in vue",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build:esm": "rollup --config rollup.config.mjs",
+    "build:umd": "rollup --config rollup.config.mjs --format umd",
+    "build:cjs": "rollup --config rollup.config.mjs --format cjs",
+    "build:types": "tsc --build tsconfig.types.json",
+    "build:example": "vue-cli-service build",
+    "build": "rimraf dist && npm run build:esm && npm run build:umd && npm run build:cjs && npm run build:types",
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch",
+    "release:alpha": "standard-version --prerelease alpha",
+    "release:beta": "standard-version --prerelease beta",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "release": "standard-version -a",
-    "major": "standard-version --release-as major",
-    "minor": "standard-version --release-as minor",
-    "patch": "standard-version --release-as patch",
-    "alpha": "standard-version --prerelease alpha",
-    "beta": "standard-version --prerelease beta"
+    "commit": "git-cz",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
+  "files": [
+    "dist",
+    "LICENSE",
+    "webpack",
+    "vite"
+  ],
   "dependencies": {
+    "@vue/composition-api": "^1.7.1",
+    "core-js": "^3.8.3",
     "ejs": "^3.1.8",
     "fs-extra": "^11.1.1",
     "glob": "^10.2.6",
     "svg-sprite-loader": "^6.0.11",
     "svgo-loader": "^3.0.1",
+    "vue": "~2.6.14",
     "webpack-virtual-modules": "0.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
+    "@babel/preset-typescript": "^7.18.6",
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@rollup/plugin-alias": "^4.0.2",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^23.0.3",
+    "@rollup/plugin-json": "^5.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-replace": "^5.0.1",
+    "@types/jest": "^27.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-unit-jest": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "core-js": "^3.8.3",
+    "@vue/eslint-config-standard": "^8.0.1",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "@vue/test-utils": "^1.1.3",
+    "@vue/vue2-jest": "^27.0.0-alpha.2",
+    "babel-jest": "^27.0.6",
+    "commitizen": "^4.2.5",
+    "coveralls": "^3.1.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "element-ui": "^2.15.14",
     "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^8.0.3",
+    "husky": "^8.0.2",
+    "jest": "^27.0.5",
+    "minimist": "^1.2.7",
+    "rimraf": "^3.0.2",
+    "rollup": "^3.5.0",
+    "rollup-plugin-filesize": "^9.1.2",
+    "rollup-plugin-import-assert": "^2.1.3",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "rollup-plugin-vue": "5.1.9",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
     "standard-version": "^9.5.0",
-    "vue": "^2.6.14",
-    "vue-template-compiler": "^2.6.14"
+    "ts-jest": "^27.0.4",
+    "typescript": "~4.5.5",
+    "vue-template-compiler": "~2.6.14"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
+      "@commitlint/config-conventional"
+    ]
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "prerelease": "npm run test:unit",
+      "postbump": "npm run build"
+    }
+  }
 }
