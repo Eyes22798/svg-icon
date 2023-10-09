@@ -4,7 +4,7 @@
   "author": "helox.ye",
   "main": "index.js",
   "module": "index.js",
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/svg-icon.vue.d.ts",
   "keywords": [
     "svg-icon",
     "svg",

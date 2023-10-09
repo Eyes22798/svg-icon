@@ -33,6 +33,9 @@ const external = [
   '@vue/composition-api'
 ]
 
+const tsIncludes = ['*.ts', '*.tsx', '*.vue', '**/*.ts', '**/*.tsx', '**/*.vue']
+const tsExcludes = ['tests/*', 'example/*']
+
 const baseConfig = {
   plugins: {
     preVue: [
@@ -68,7 +71,14 @@ const buildConfig = {
     json(),
     importAssertionsPlugin,
     postcss(),
-    typescript(tsConfig),
+    typescript({
+      tsconfigOverride: {
+        ...tsConfig,
+        'include': tsIncludes,
+        'exclude': tsExcludes
+      },
+      abortOnError: false
+    }),
     babel({
       ...baseConfig.plugins.babel,
       presets: [
