@@ -120,5 +120,8 @@
     "scripts": {
       "postbump": "npm run build"
     }
+  },
+  "peerDependencies": {
+    "@vue/composition-api": ">=1.7.1"
   }
 }
