@@ -2,7 +2,7 @@ const path = require('path')
 const ejs = require('ejs')
 const fsExtra = require('fs-extra')
 const fs = require('fs')
-const { globSync } = require('glob')
+const glob = require('glob')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
 
 function isPackageInstalled(packageName) {
@@ -34,7 +34,7 @@ const findFileFolder = (dir, filename) => {
   return result;
 }
 const readFile = function ({ dir = '', prefix = ''}) {
-  const files = globSync(dir, {
+  const files = glob.sync(dir, {
     absolute: true,
     cwd: path.resolve(__dirname, '..')
   })
