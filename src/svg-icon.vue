@@ -12,10 +12,8 @@
   </svg>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
-
-export default defineComponent({
+<script>
+export default {
   name: 'SvgIcon',
   props: {
     name: {
@@ -43,33 +41,30 @@ export default defineComponent({
       default: '#cacdd3'
     }
   },
-  setup (props) {
-    const iconName = computed(() => `#icon-${props.name}`)
-    const svgClass = computed(() => {
+  computed: {
+    iconName() {
+      return `#icon-${this.name}`
+    },
+    svgClass() {
       let svgClass = ''
-      if (props.className) {
-        svgClass = 'svg-icon' + (Array.isArray(props.className) ? props.className.join(' ') : props.className)
+      if (this.className) {
+        svgClass = 'svg-icon' + (Array.isArray(this.className) ? this.className.join(' ') : this.className)
       } else {
         svgClass = 'svg-icon'
       }
 
-      if (props.interact) {
+      if (this.interact) {
         svgClass += ' ' + 'interact'
       }
 
-      if (props.disabled) {
+      if (this.disabled) {
         svgClass += ' ' + 'disabled'
       }
 
       return svgClass
-    })
-
-    return {
-      iconName,
-      svgClass
     }
   }
-})
+}
 </script>
 
 <style lang="scss">
