@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.7](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.6...v1.0.7) (2023-10-11)
+
+
+### Bug Fixes
+
+* vue deps error ([7454516](https://github.com/Eyes22798/custom-svg-icon/commit/74545161e5163b0d2923f002679b6af05795d6ed))
+
 ### [1.0.5](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.6...v1.0.5) (2023-10-11)
 
 
