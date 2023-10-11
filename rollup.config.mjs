@@ -101,7 +101,7 @@ const buildConfig = {
 
 if (argv.format === 'umd') {
   buildConfig.output.format = 'umd'
-  buildConfig.output.file = `dist/index.js`
+  buildConfig.output.file = `dist/index.umd.js`
 }
 
 if (argv.format === 'cjs') {
