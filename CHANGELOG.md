@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.6](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.5...v1.0.6) (2023-10-11)
+
+
+### Bug Fixes
+
+* glob deps version ([643c105](https://github.com/Eyes22798/custom-svg-icon/commit/643c105323aa914bbea09ec240fe01974468ea0f))
+
 ### [1.0.5](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.4...v1.0.5) (2023-10-11)
 
 
