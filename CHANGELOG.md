@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.4...v1.0.5) (2023-10-11)
+
+
+### Bug Fixes
+
+* add peerdeps ([f0fa1b8](https://github.com/Eyes22798/custom-svg-icon/commit/f0fa1b8b29d2bd049a8ddccb25b7076cb5fff013))
+
 ### [1.0.4](https://github.com/Eyes22798/custom-svg-icon/compare/v1.0.3...v1.0.4) (2023-10-11)
 
 
