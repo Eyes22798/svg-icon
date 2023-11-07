@@ -4,6 +4,7 @@ const fsExtra = require('fs-extra')
 const fs = require('fs')
 const glob = require('glob')
 const VirtualModulesPlugin = require('webpack-virtual-modules')
+const webpack = require('webpack')
 
 function isPackageInstalled(packageName) {
   try {
@@ -60,7 +61,12 @@ class virtualModulesWebPackPlugin {
     this.options = options
   }
   apply(compiler) {
+    const definePlugin = new webpack.DefinePlugin({
+      'process.env.__SVG_ICON_PATH__': JSON.stringify(this.options.iconPath),
+      'process.env.__SVG_ICON_NAME__': JSON.stringify(this.options.name),
+    })
     this._addVirtualModules(compiler) // 生成虚拟模块
+    definePlugin(compiler) // 注入环境变量
   }
 
   _addVirtualModules(compiler) {
