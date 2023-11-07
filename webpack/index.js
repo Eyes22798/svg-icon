@@ -66,7 +66,7 @@ class virtualModulesWebPackPlugin {
       'process.env.__SVG_ICON_NAME__': JSON.stringify(this.options.name),
     })
     this._addVirtualModules(compiler) // 生成虚拟模块
-    definePlugin(compiler) // 注入环境变量
+    definePlugin.apply(compiler) // 注入环境变量
   }
 
   _addVirtualModules(compiler) {
