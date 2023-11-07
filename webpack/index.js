@@ -85,7 +85,7 @@ class virtualModulesWebPackPlugin {
     this.virtualModulesPlugin = new VirtualModulesPlugin(data)
     this.virtualModulesPlugin.apply(compiler)
     if (process.env.NODE_ENV === 'production' && isPackageInstalled('@eyes22798/svg-icon/webpack')) {
-      fsExtra.outputFileSync(sourcePath, source, 'utf8')
+      // fsExtra.outputFileSync(sourcePath, source, 'utf8')
     }
   }
 }
