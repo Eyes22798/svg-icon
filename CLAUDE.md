@@ -5,65 +5,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run serve          # Dev server for the example app
-npm run build          # Full build: ESM + UMD + CJS + type declarations
-npm run build:esm      # Rollup ESM build only
-npm run build:umd      # Rollup UMD build only
-npm run build:cjs      # Rollup CJS build only
-npm run build:types    # TypeScript declarations only
-npm run build:example  # Production build of the example app
-npm run test:unit      # Run Jest unit tests
-npm run lint           # ESLint via vue-cli-service
-npm run commit         # Interactive commit with commitizen
-```
-
-Release (bumps version, builds, pushes tag, publishes):
-```bash
-npm run release:patch   # Patch release
-npm run release:minor   # Minor release
-npm run release:major   # Major release
-npm run release:alpha   # Alpha prerelease
-npm run release:beta    # Beta prerelease
+npm run dev          # Vite dev server for the example app
+npm run build        # Full build: Vite library mode (ESM + UMD) + type declarations
+npm run build:types  # vue-tsc type declarations only
+npm run preview      # Preview production build of the example app
+npm run test         # Run Vitest unit tests
+npm run test:watch   # Vitest in watch mode
 ```
 
 ## Architecture
 
-This is a Vue 2 SVG icon component library (`@eyes22798/svg-icon`) that renders icons from an SVG sprite. It ships with a webpack integration helper for consumers.
+This is a Vue 3 SVG icon component library (`@eyes22798/svg-icon`) that renders icons from an SVG sprite. It ships with both Vite and webpack integration helpers for consumers.
 
 ### Source layout
 
-- **`src/svg-icon.vue`** — The Vue component. Takes `name` (SVG symbol ID), `className`, `disabled`, `interact` (hover/active effects), and color props. Renders an `<svg>` with a `<use>` element pointing to `#icon-{name}`.
-- **`src/template.js`** — EJS template that wraps the component with installation logic. Uses `require.context` to auto-import all SVGs from the consumer's icon directory. Contains `<%= iconPath %>` and `<%= name %>` EJS placeholders replaced at build time.
-- **`src/index.js`** — Re-exports from `template.js`.
+- **`src/svg-icon.vue`** — The Vue 3 component written in `<script setup lang="ts">` (Composition API). Takes `name` (SVG symbol ID), `className`, `disabled`, `interact` (hover/active effects), and color props. Renders an `<svg>` with a `<use>` element pointing to `#icon-{name}` via `href` (SVG 2).
+- **`src/template-webpack.js`** — EJS template for webpack. Uses `require.context` to auto-import SVGs from the consumer's icon directory. Contains `<%= iconPath %>` and `<%= name %>` EJS placeholders.
+- **`src/template-vite.js`** — EJS template for Vite. Uses `import.meta.glob` instead of `require.context`. Contains `<%= componentSource %>` placeholder for the SFC path resolved at plugin render time.
+- **`src/index.js`** — Re-exports from `template-webpack.js`.
 
-### Webpack integration (`webpack/index.js`)
+### Vite plugin (`vite/index.js`)
 
-The `SvgIconConfig` function is the main export consumers use in `vue.config.js`. It does three things via `chainWebpack`:
+The `SvgIconPlugin` function is the main export consumers use in `vite.config.ts`. It does three things:
 
-1. **Configures svg-sprite-loader** — Generates an SVG sprite from the consumer's icon directory, with symbol IDs in `icon-[name]` format.
-2. **Configures svgo-loader** — Optimizes SVGs and strips `fill` attributes. Directories named `original` are excluded from SVGO processing.
-3. **Creates virtual modules** (`virtualModulesWebPackPlugin`) — Reads the Vue SFC, renders the EJS template (injecting `iconPath` and component `name`), and mounts it virtually at `node_modules/@eyes22798/svg-icon/index.js` so the consumer's `import SvgIcon from '@eyes22798/svg-icon'` resolves without the package being physically in node_modules.
+1. **Virtual module** — Intercepts imports of `@eyes22798/svg-icon` and returns the Vite template rendered with EJS (injecting `componentSource`, `iconPath`, and component `name`).
+2. **SVG sprite injection** (`transformIndexHtml`) — Recursively collects all SVGs from the consumer's icon directory, wraps them as `<symbol>` elements, and injects an inline sprite before `</body>`.
+3. **SVGO optimization** — Strips `fill` attributes from SVGs, excluding files under `original/` subdirectories.
 
-When the package IS physically installed, it uses the pre-built `dist/index.esm.js` instead of re-rendering from source.
+Zero external sprite dependencies (only `fs`, `path`, `ejs`).
 
-### Rollup build (`rollup.config.mjs`)
+### Webpack plugin (`webpack/index.js`)
 
-Builds the library from `src/index.js` → `dist/`. Supports three output formats controlled by `--format`:
-- `esm` → `dist/index.esm.js` (default)
+The `SvgIconConfig` function for webpack consumers (`vue.config.js`). Uses `svg-sprite-loader`, `svgo-loader`, and `webpack-virtual-modules`. Renders the webpack EJS template into a virtual module at `node_modules/@eyes22798/svg-icon/index.js`.
+
+### Build (`vite.config.ts`)
+
+Vite library mode builds from `src/index.js` → `dist/`:
+- `es` → `dist/index.esm.js`
 - `umd` → `dist/index.umd.js`
-- `cjs` → `dist/index.common.js`
 
-The Vue SFC is processed through `rollup-plugin-vue`, TypeScript through `rollup-plugin-typescript2`, then Babel. External dependencies: `vue`, `element-ui`, `@vue/composition-api`.
-
-### Package entry points
-
-- `package.json` `"main"` and `"module"` point to root `index.js` — this file is generated by the virtual module plugin during the consumer's webpack build, not committed to the repo.
-- Published `"files"`: `dist`, `webpack`, `vite` (vite support is listed but not yet implemented).
+TypeScript declarations via `vue-tsc` → `dist/types/`. External dependency: `vue`.
 
 ### Testing
 
-Jest via `@vue/cli-plugin-unit-jest` with `@vue/test-utils`. Test files live in `tests/unit/`. The single existing test (`button.spec.ts`) imports from a stale path (`../../src/index.vue`) that doesn't exist.
+Vitest with `@vue/test-utils` v2 and `jsdom`. Test files live in `src/__tests__/`. Run with `npm test`.
 
 ### Example app
 
-A Vue CLI app in `example/` that demonstrates the icon component. Run with `npm run serve`.
+A vanilla Vue 3 app in `example/` that demonstrates the icon component. Uses the Vite plugin to load SVG icons. Run with `npm run dev`.
