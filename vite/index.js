@@ -59,8 +59,8 @@ module.exports = function SvgIconPlugin(options = {}) {
 
   let resolvedIconPath = ''
   let originalDirs = []
-  let componentSource = ''
-  let templateSource = ''
+  let componentSource = null
+  let templateSource = null
 
   return {
     name: 'svg-icon-plugin',
@@ -70,26 +70,25 @@ module.exports = function SvgIconPlugin(options = {}) {
       originalDirs = findOriginalDirs(resolvedIconPath)
     },
 
-    buildStart() {
-      // Resolve absolute path to the SFC source, works in both dev (this repo)
-      // and production (installed in consumer's node_modules)
-      componentSource = resolve(__dirname, '../src/svg-icon.vue').split('\\').join('/')
-      const templatePath = resolve(__dirname, '../src/template-vite.js')
-      templateSource = readFileSync(templatePath, 'utf-8')
-    },
-
     resolveId(id) {
       if (id === VIRTUAL_MODULE_ID) return RESOLVED_VIRTUAL_MODULE_ID
     },
 
     load(id) {
-      if (id === RESOLVED_VIRTUAL_MODULE_ID) {
-        return ejs.render(templateSource, {
-          componentSource,
-          iconPath: resolvedIconPath.split('\\').join('/'),
-          name
-        })
+      if (id !== RESOLVED_VIRTUAL_MODULE_ID) return
+
+      // Lazy-init on first load — works in both dev & build
+      if (!templateSource) {
+        componentSource = resolve(__dirname, '../src/svg-icon.vue').split('\\').join('/')
+        const templatePath = resolve(__dirname, '../src/template-vite.js')
+        templateSource = readFileSync(templatePath, 'utf-8')
       }
+
+      return ejs.render(templateSource, {
+        componentSource,
+        iconPath: resolvedIconPath.split('\\').join('/'),
+        name
+      })
     },
 
     transformIndexHtml(html) {

@@ -1,9 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import SvgIconPlugin from './vite/index.js'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    SvgIconPlugin({
+      iconPath: './example/assets/icons',
+      name: 'svg-icon'
+    })
+  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.js'),

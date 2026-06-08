@@ -10,6 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
+    "rootDir": ".",
     "baseUrl": ".",
     "types": ["vitest/globals"],
     "paths": {
