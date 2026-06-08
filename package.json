@@ -30,7 +30,11 @@
     "dist",
     "LICENSE",
     "webpack",
-    "vite"
+    "vite",
+    "src/svg-icon.vue",
+    "src/template-vite.js",
+    "src/template-webpack.js",
+    "src/index.js"
   ],
   "dependencies": {
     "ejs": "^3.1.8",
