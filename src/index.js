@@ -1,3 +1,3 @@
-import install from './template.js'
+import install from './template-webpack.js'
 
 export default install

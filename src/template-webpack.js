@@ -9,8 +9,8 @@ const req = require.context('<%= iconPath %>', true, /\.svg$/)
 const componentName = '<%= name %>'
 requireAll(req)
 
-SvgIcon.install = function (Vue) {
-  Vue.component(componentName || SvgIcon.name, SvgIcon)
+SvgIcon.install = function (app) {
+  app.component(componentName || 'SvgIcon', SvgIcon)
 }
 
 export default SvgIcon
