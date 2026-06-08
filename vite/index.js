@@ -1,5 +1,5 @@
 const { readFileSync, readdirSync, statSync, existsSync } = require('fs')
-const { resolve, join, basename, extname } = require('path')
+const { resolve, join, relative, basename, extname } = require('path')
 const ejs = require('ejs')
 
 const VIRTUAL_MODULE_ID = '@eyes22798/svg-icon'
@@ -61,11 +61,14 @@ module.exports = function SvgIconPlugin(options = {}) {
   let originalDirs = []
   let componentSource = null
   let templateSource = null
+  let projectRoot = ''
 
   return {
     name: 'svg-icon-plugin',
+    enforce: 'pre',
 
     configResolved(config) {
+      projectRoot = config.root
       resolvedIconPath = resolve(config.root, iconPath)
       originalDirs = findOriginalDirs(resolvedIconPath)
     },
@@ -79,14 +82,18 @@ module.exports = function SvgIconPlugin(options = {}) {
 
       // Lazy-init on first load — works in both dev & build
       if (!templateSource) {
-        componentSource = resolve(__dirname, '../src/svg-icon.vue').split('\\').join('/')
+        const absoluteSfcPath = resolve(__dirname, '../src/svg-icon.vue')
+        componentSource = '/' + relative(projectRoot, absoluteSfcPath).split('\\').join('/')
         const templatePath = resolve(__dirname, '../src/template-vite.js')
         templateSource = readFileSync(templatePath, 'utf-8')
       }
 
+      // Use project-relative path for import.meta.glob
+      const relativeIconPath = relative(projectRoot, resolvedIconPath).split('\\').join('/')
+
       return ejs.render(templateSource, {
         componentSource,
-        iconPath: resolvedIconPath.split('\\').join('/'),
+        iconPath: relativeIconPath,
         name
       })
     },

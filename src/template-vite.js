@@ -1,6 +1,6 @@
 import SvgIcon from '<%= componentSource %>'
 
-const icons = import.meta.glob('<%= iconPath %>/**/*.svg', { eager: true, query: '?raw', import: 'default' })
+const icons = import.meta.glob('/<%= iconPath %>/**/*.svg', { eager: true, query: '?raw', import: 'default' })
 window.__svg_icons__ = Object.keys(icons)
 
 const componentName = '<%= name %>'
