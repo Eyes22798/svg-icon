@@ -1,51 +1,65 @@
 <template>
   <div id="app">
-    <div>
-      <h2>SVG ICON LIST ViEW</h2><svg-icon-1 name="success" className="icon-task" />
-
-      <IconList :icons="icons" />
+    <h2>SVG Icon Demo</h2>
+    <div class="icon-grid">
+      <div v-for="icon in icons" :key="icon" class="icon-item">
+        <svg-icon :name="icon" class-name="demo-icon" />
+        <span>{{ icon }}</span>
+      </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from '@vue/composition-api'
-import IconList from '../example/components/icon-list.vue'
-
-export default defineComponent({
-  components: {
-    IconList,
-  },
-  setup() {
-    const icons =  [
-      { name: 'bianjirenwu' },
-      { name: 'close-circle' },
-      { name: 'question' },
-      { name: 'success' },
-      { name: 'warning-circle' },
-      { name: 'task' },
-      { name: 'a-shujukeshihua' },
-      { name: 'huaban' },
-      { name: 'shouye' },
-      { name: 'shoucang' },
-      { name: 'shanchu' },
-      { name: 'shijianchuo' },
-      { name: 'shijianzhouqi' },
-      { name: 'shuzihua' },
-      { name: 'sousuobianxiao' },
-      { name: 'sousuofangda' },
-      { name: 'wodetuandui' },
-      { name: 'wodexiangmu' },
-      // { name: 'business-fill' },
-    ]
-
-    return {
-      icons
-    }
-  }
-})
+<script setup lang="ts">
+const icons = [
+  'bianjirenwu',
+  'close-circle',
+  'question',
+  'success',
+  'warning-circle',
+  'task',
+  'a-shujukeshihua',
+  'huaban',
+  'shouye',
+  'shoucang',
+  'shanchu',
+  'shijianchuo',
+  'shijianzhouqi',
+  'shuzihua',
+  'sousuobianxiao',
+  'sousuofangda',
+  'wodetuandui',
+  'wodexiangmu'
+]
 </script>
 
 <style lang="scss">
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: sans-serif;
+}
 
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 80px;
+  font-size: 12px;
+  color: #666;
+}
+
+.demo-icon {
+  font-size: 32px;
+  color: #409eff;
+}
 </style>
